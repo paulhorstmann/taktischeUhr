@@ -1,7 +1,4 @@
 import { Font, HorizontalAlignment, LayoutUtils, LedMatrixInstance, VerticalAlignment } from "rpi-led-matrix";
-import { scheduleJob } from "node-schedule"
-
-import { wait } from "../utils";
 
 const monthNames: Array<string> = [
     "JAN",
@@ -18,7 +15,7 @@ const monthNames: Array<string> = [
     "DEC",
 ]
 
-async function start(matrix: LedMatrixInstance) {
+export default async function start(matrix: LedMatrixInstance) {
     const font = new Font('helvR12', `${process.cwd()}/assets/fonts/Clock.bdf`);
     matrix.font(font);
     const lines = LayoutUtils.textToLines(
@@ -45,5 +42,3 @@ function getTacticalTimeFormat(): string {
     const now = new Date
     return "" + now.getDate() + now.getHours() + now.getMinutes() + monthNames[now.getMonth()] + (now.getFullYear() + "").slice(2, 4)
 }
-
-export default { start } 

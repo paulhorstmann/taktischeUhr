@@ -5,7 +5,7 @@ import { createCanvas } from "canvas"
 import * as qr from 'qrcode'
 
 import test from "./test"
-import clockView from "./views/clock"
+import clockView from "./views/tacticalClock"
 import { convertBGRAtoRGB, wait } from "./utils";
 
 const matrix = new LedMatrix(matrixOptions, runtimeOptions);
@@ -43,23 +43,6 @@ async function startView(display: string) {
 }
 
 (async () => {
-    const canvas = createCanvas(128, 32)
-    const ctx = canvas.getContext('2d')
 
-    ctx.fillStyle = "#fff000"
-    ctx.fillRect(0, 0, 128, 32)
-
-    const qrcode = createCanvas(30, 30)
-
-    qr.toCanvas(qrcode, "http://hospi", {
-        scale: 1,
-        margin: 1
-    })
-
-    ctx.drawImage(qrcode, 0, 0);
-    matrix.drawBuffer(convertBGRAtoRGB(canvas.toBuffer("raw")));
-    matrix.sync();
-
-    await wait(100000)
 })()
 
