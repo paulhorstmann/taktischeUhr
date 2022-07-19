@@ -1,0 +1,49 @@
+#loader
+    position: fixed
+    display: flex
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background: #ffffff
+    z-index: 100
+    // display: none
+
+    .inner
+        position: absolute
+        top: 30%
+        left: 50%
+        transform: translate(-50%, -50%) scale(0.8)
+        display: flex
+        justify-content: center
+        animation: display 1s forwards
+
+        #text-loader
+            display: flex
+            align-items: center
+            width: 0%
+            opacity: 0
+            padding-right: 10px
+
+        .show
+            animation: showText 1s forwards
+            animation-timing-function: linear
+
+        #spinner
+            display: flex
+            justify-content: center
+            align-items: center
+            width: 120px
+
+            #rad
+                positaion: absolute
+                z-index: 1
+                transition: 0.5s transform
+
+            #thwLetter
+                position: absolute
+                z-index: 2
+
+            .rotation
+                animation: rotate 2s infinite
+                animation-timing-function: ease-in-out

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+    <g id="menu" transform="translate(-46 -31)">
+        <rect id="background" width="40" height="40" transform="translate(46 31)" fill="rgba(0,0,0,0)" />
+        <path id="ham" d="M5.292,9a1.252,1.252,0,1,0,0,2.5H37.15a1.252,1.252,0,1,0,0-2.5Zm0,11.264a1.252,1.252,0,1,0,0,2.5H37.15a1.252,1.252,0,1,0,0-2.5Zm0,11.264a1.252,1.252,0,1,0,0,2.5H37.15a1.252,1.252,0,1,0,0-2.5Z" transform="translate(44.779 29.484)" fill="#fff" />
+    </g>
+</svg>
+  

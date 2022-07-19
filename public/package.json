@@ -1,0 +1,15 @@
+{
+  "name": "Pug",
+  "version": "1.0.0",
+  "main": "app.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "pug -w ./views -o ./ -P",
+    "build": "pug ./views -o ./"
+  },
+  "repository": "https://github.com/paulhorstmann/Pug.git",
+  "author": "Paul Horstmann <paulluishorstmann@gmail.com>",
+  "dependencies": {
+    "bootstrap": "^5.0.1"
+  }
+}

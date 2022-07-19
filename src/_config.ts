@@ -8,7 +8,7 @@ import {
 
 export const matrixOptions: MatrixOptions = {
     ...LedMatrix.defaultMatrixOptions(),
-    rows: 32,
+    rows: 32, 
     cols: 64,
     chainLength: 2,
     hardwareMapping: GpioMapping.Regular,

@@ -1,48 +1,80 @@
 import { LedMatrix } from "rpi-led-matrix";
 import { matrixOptions, runtimeOptions } from './_config';
 
-import { createCanvas } from "canvas"
-import * as qr from 'qrcode'
-
-import test from "./test"
-import clockView from "./views/tacticalClock"
-import { convertBGRAtoRGB, wait } from "./utils";
+import { wait } from "./utils";
+import { ViewHandler, ViewTypes } from "./ViewHandler";
 
 const matrix = new LedMatrix(matrixOptions, runtimeOptions);
 
-let activeIndecator = 0;
+let activeViewIndicator = 0;
+let noChanges = true
 
-let views = ["tclock", "weather", "tclock"]
-let activeView = "tclock"
+let switchInterval = 50000
 
+let views = [
+    new ViewHandler(matrix, ViewTypes.TacticalClockFormat, true),
+    new ViewHandler(matrix, ViewTypes.Weather),
+    new ViewHandler(matrix, ViewTypes.Newsfeed),
+    new ViewHandler(matrix, ViewTypes.Image),
+    new ViewHandler(matrix, ViewTypes.ISOClockFormat, true),
+]
 
+import express from "express";
 
-async function startLoop() {
-    await wait(200)
+const app = express();
+const port = 80;
 
-    setInterval(async () => {
-        updateDisplay(views[activeIndecator])
-        await wait(30000)
-    }, 30000)
-}
+app.listen(port, () => {
+    console.log(`[Web Server] started at http://localhost:${port}`);
+});
 
-function updateDisplay(display: string) {
-    switch (display) {
-        case "tclock": console.log("tclock"); break;
-        case "weather": console.log("weather"); break;
-        case "newsfeed": console.log("newsfeed"); break;
-        case "text": console.log("text"); break;
-        case "normalclock": console.log("normalclock"); break;
-    }
-}
+app.use(express.static('./public'));
 
-async function startView(display: string) {
-    for (let i = 0; i < 100; i++) {
-
-    }
-}
 
 (async () => {
+    await new ViewHandler(matrix, ViewTypes.Spalsh).showSync(5000)
+    while (true) {
+        await startLoop()
 
+    }
 })()
 
+async function startLoop() {
+
+    while (noChanges) {
+        console.log("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+        const activeView: ViewHandler = views[activeViewIndicator]
+
+        if (activeView.needToRefresh) {
+            const refreshInterval = setInterval(() => {
+                activeView.showSync()
+            }, 100)
+            await wait(switchInterval)
+            clearInterval(refreshInterval)
+        } else {
+            activeView.show()
+            matrix.sync()
+            await wait(switchInterval)
+        }
+
+        switchActiveViewIndicator()
+    }
+}
+
+function switchActiveViewIndicator() {
+    if (activeViewIndicator == views.length - 1) {
+        activeViewIndicator = 0
+    } else {
+        activeViewIndicator++
+    }
+
+}
+
+// (async () => {
+//     const test = new ViewHandler(matrix, ViewTypes.Test)
+//     await test.fadeIn()
+//     matrix.sync()
+//     await wait(10000)
+// })()
+
+// startLoop()

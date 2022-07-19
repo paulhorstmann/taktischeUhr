@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+    <g id="close" transform="translate(-106 -18)">
+        <rect id="background" width="40" height="40" transform="translate(106 18)" fill="rgba(0,0,0,0)" />
+        <path id="close-2" data-name="close" d="M30.275,6.978a1.075,1.075,0,0,0-.75.33L19.177,17.656,8.83,7.309a1.075,1.075,0,1,0-1.52,1.52L17.658,19.176,7.311,29.523a1.075,1.075,0,1,0,1.52,1.52L19.177,20.7,29.525,31.043a1.075,1.075,0,1,0,1.52-1.52L20.7,19.176,31.044,8.829a1.075,1.075,0,0,0-.77-1.85Z" transform="translate(106.839 18.846)" fill="#fff" />
+    </g>
+</svg>
+  

@@ -1,30 +1,17 @@
 import { Font, HorizontalAlignment, LayoutUtils, LedMatrixInstance, VerticalAlignment } from "rpi-led-matrix";
 
-const monthNames: Array<string> = [
-    "JAN",
-    "FEB",
-    "MAR",
-    "ARP",
-    "MAY",
-    "JUN",
-    "JUL",
-    "AUG",
-    "SEP",
-    "OCT",
-    "NOV",
-    "DEC",
-]
-
-export default async function start(matrix: LedMatrixInstance) {
+export default async function Error(matrix: LedMatrixInstance) {
     const font = new Font('helvR12', `${process.cwd()}/assets/fonts/Clock.bdf`);
     matrix.font(font);
+
     const lines = LayoutUtils.textToLines(
         font,
         matrix.width(),
-        getTacticalTimeFormat()
+        "ERROR"
     );
 
     matrix.fgColor(0xff0000).clear();
+
     LayoutUtils.linesToMappedGlyphs(
         lines,
         font.height(),
@@ -36,9 +23,11 @@ export default async function start(matrix: LedMatrixInstance) {
         matrix.drawText(glyph.char, glyph.x, glyph.y);
     });
 
+    matrix.sync()
 }
 
 function getTacticalTimeFormat(): string {
     const now = new Date
-    return "" + now.getDate() + now.getHours() + now.getMinutes() + monthNames[now.getMonth()] + (now.getFullYear() + "").slice(2, 4)
+    return now.getHours() + " : " + now.getMinutes()
+    return now.getSeconds() + ""
 }

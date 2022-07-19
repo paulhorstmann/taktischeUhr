@@ -1,0 +1,119 @@
+doctype html
+html(lang="de")
+	head
+		meta(charset="UTF-8")
+		title Anzeigeeinstellungen		
+
+		include includes/header.pug
+
+		link(rel="stylesheet" href="./assets/css/anzeige.min.css")
+	body(style="opacity: 0")
+		include includes/loader.pug
+		include includes/nav.pug
+
+		main
+			header.container
+				h1 Anzeigeeinstellungen
+
+			.container.center#format 
+				.input-container
+					label(for="ssid") Zeitformat
+					input#ssid(type="text" value="DDhhmmMMMYY")
+
+
+			.container.center#addon
+				h3 Add-Ons
+
+				.cardAddon#wetter
+					.cardHeader
+						.title 
+							img(src="/assets/img/icons/addon/weather.svg" alt="").icon
+							.text Wetter
+
+						label.switch
+							input(type="checkbox")
+							span.slider.round
+					.cardBody
+						.zipcode
+							img(src="./assets/img/icons/check.svg")#checkLocationIcon
+							label(for="weatherZIP") Standort
+							input(type="text" placeholder="Stadt oder Postleitzahl")#weatherZIP
+							#postleitzahlResponse
+						.apiKey
+							label(for="apiWeatherKey") API Key
+							input(type="text" placeholder="32 stelliger Key")#openWeatherApiKey 
+							p 
+								| Erstelle einen API KEY unter 
+								a(href="https://openweathermap.org/") openweathermap.org 
+
+				.cardAddon#imageUpload
+					.cardHeader
+						.title 
+							img(src="/assets/img/icons/addon/image.svg" alt="").icon
+							.text Bild anzeigen
+
+						label.switch
+							input(type="checkbox")
+							span.slider.round
+
+					.cardBody
+						.radioImageSelect
+							input(type="radio" name="imageUpload" )#imageUpload1
+							label(for="imageUpload")
+							img(src="./assets/img/example/thwLogo.svg").imageContent
+							img(src="./assets/img/icons/trash.svg" alt="").trashIcon
+
+						.radioImageSelect
+							input(type="radio" name="imageUpload")#imageUpload2
+							label(for="imageUpload")
+							img(src="./assets/img/example/thwLogo.svg").imageContent
+							img(src="./assets/img/icons/trash.svg" alt="").trashIcon
+
+						.uploadBtn
+							label(for="").btn Bild hochladen
+							input(type="file")#image
+
+				.cardAddon#rssFeed
+					.cardHeader
+						.title 
+							img(src="/assets/img/icons/addon/news.svg" alt="").icon
+							.text THW Newsfeed
+
+						label.switch
+							input(type="checkbox")
+							span.slider.round
+					.cardBody
+						label(for="weatherZIP") THW RSS URL
+						input(type="url" value="https://www.thw.de/SiteGlobals/Functions/RSS/DE/Feed/RSSNewsfeed_Meldungen_Gesamt.xml?nn=924198")
+
+				.cardAddon#texteingabe
+					.cardHeader
+						.title 
+							img(src="/assets/img/icons/addon/text.svg" alt="").icon
+							.text Texteingabe
+
+						label.switch
+							input(type="checkbox")
+							span.slider.round
+					.cardBody
+						label(for="weatherZIP") Anzuzeigender Text
+						input(type="text" value="Beispieltext")
+
+				.cardAddon#iso
+					.cardHeader
+						.title 
+							img(src="/assets/img/icons/addon/clock.svg" alt="").icon
+							.text ISO 8601 Uhrzeitformat
+
+						label.switch
+							input(type="checkbox")
+							span.slider.round
+					.cardBody
+						p ISO 8601 ist ein internationaler Standard der ISO, der Empfehlungen über numerische Datumsformate und Zeitangaben enthält
+						p Einundzwanzig Uhr fünfunddreißig wäre in diesem Format - 21:35 ✌️
+
+
+		script(type="text/javascript" src="./assets/js/preload.js") 
+		script(type="text/javascript" src="./assets/dist/hammerjs/hammer.min.js") 
+		script(type="text/javascript" src="./assets/js/main.js") 
+		script(type="text/javascript" src="./assets/js/anzeige.js") 

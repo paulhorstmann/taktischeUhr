@@ -1,0 +1,50 @@
+doctype html
+html(lang="de")
+	head
+		meta(charset="UTF-8")
+		title Netzwerkeinstellungen		
+
+		include includes/header.pug
+
+		link(rel="stylesheet" href="./assets/css/network.min.css")
+
+	body(style="opacity: 0")
+		include includes/loader.pug
+		include includes/nav.pug
+
+		main
+			header.container
+				h1 Netzwerkverbindung
+				hr
+
+			.container.center#network
+				.status
+					img#connectionIcon(src="./assets/img/icons/wifi/wi-fi_disconnected.svg" alt="")
+
+					#statustext.bad
+						| Verbindung: 
+						span Nicht erreichbar
+
+				.input-container
+					label(for="ssid") Netwerkname / SSID
+					input#ssid(type="text" placeholder="Netzwerkname")
+
+				.input-container
+					label(for="wifipassword") Netzwerkpasswort
+					input#wifipassword(type="password" placeholder="Passwort" )
+
+				.input-container
+					label(for="encryption") Verschlüsselung 
+					select(name="encryption")
+						option(value="no") Keine Verschlüsselung
+						option(value="WPA") WPA
+						option(value="WPA2") WPA2
+						option(value="WPA3") WPA3
+
+				button.btn
+					| Verbindug testen
+					img.spinner(src="./assets/img/icons/loader.svg" alt="")
+
+		script(type="text/javascript" src="./assets/js/preload.js") 
+		script(type="text/javascript" src="./assets/dist/hammerjs/hammer.min.js") 
+		script(type="text/javascript" src="./assets/js/main.js") 
