@@ -21,8 +21,6 @@ export default async function show(matrix: LedMatrixInstance) {
     ).map(glyph => {
         matrix.drawText(glyph.char, glyph.x, glyph.y);
     });
-
-    matrix.sync()
 }
 
 const monthNames: Array<string> = [

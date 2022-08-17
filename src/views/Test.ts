@@ -3,7 +3,7 @@ import * as qr from 'qrcode'
 import { HorizontalAlignment, LayoutUtils, LedMatrixInstance, VerticalAlignment } from "rpi-led-matrix"
 import { convertBGRAtoRGB, wait } from "../utils"
 import ip from "ip"
-import { BigFont, SmallerFont } from "./assets/Fonts"
+import { BigFont, MediumFont, SmallerFont } from "./assets/Fonts"
 
 export default async function Test(matrix: LedMatrixInstance) {
     const canvas = createCanvas(128, 32)
@@ -48,7 +48,7 @@ export default async function Test(matrix: LedMatrixInstance) {
         matrix.drawText(glyph.char, glyph.x + 1, glyph.y + 1);
     });
 
-    const fontTwo = SmallerFont
+    const fontTwo = MediumFont
     matrix.font(fontTwo);
 
     const linesTwo = LayoutUtils.textToLines(
@@ -70,5 +70,6 @@ export default async function Test(matrix: LedMatrixInstance) {
         matrix.drawText(glyph.char, glyph.x + 2, glyph.y + 4);
     });
 
+    matrix.sync()
 }
 

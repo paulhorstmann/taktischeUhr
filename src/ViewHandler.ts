@@ -8,63 +8,90 @@ import Image from "./views/Image"
 import SimpleText from "./views/SimpleText"
 import ErrorView from "./views/ErrorView"
 import Test from "./views/Test"
+import Countdown from "./views/Countdown"
+
 import { wait } from "./utils"
+
+import RSSFeedHandler from "./services/RSSFeedHandler";
+import WeatherIcons from "./views/WeatherIcons"
 
 export class ViewHandler {
     matrix: LedMatrixInstance
     type: ViewTypes
     needToRefresh: boolean
-    view: (matrix: LedMatrixInstance) => Promise<void>;
+    views: Array<(matrix: LedMatrixInstance, activeView?: number) => Promise<void>>;
+    activeView: number
+    isSelected: boolean
 
-    constructor(matrix: LedMatrixInstance, type: ViewTypes, needToRefresh: boolean = false) {
+    constructor(matrix: LedMatrixInstance, type: ViewTypes, needToRefresh: boolean = false, isSelected = true) {
         this.matrix = matrix
         this.type = type
         this.needToRefresh = needToRefresh
+        this.views = []
+        this.activeView = 0
+        this.isSelected = isSelected
 
         switch (type) {
             case ViewTypes.TacticalClockFormat:
-                this.view = TacticalClockFormat; break;
+                this.views.push(TacticalClockFormat); break;
             case ViewTypes.Weather:
-                this.view = Weather; break;
+                this.views.push(WeatherIcons); break;
             case ViewTypes.Newsfeed:
-                this.view = Newsfeed; break;
+                for (let i = 0; i < 10; i++) {
+                    this.views.push(Newsfeed);
+                }
+                break;
             case ViewTypes.SimpleText:
-                this.view = SimpleText; break;
+                this.views.push(SimpleText); break;
             case ViewTypes.Image:
-                this.view = Image; break;
+                this.views.push(Image); break;
             case ViewTypes.ISOClockFormat:
-                this.view = ISOClockFormat; break;
+                this.views.push(ISOClockFormat); break;
             case ViewTypes.Spalsh:
-                this.view = Splash; break;
+                this.views.push(Splash); break;
             case ViewTypes.Test:
-                this.view = Test; break;
+                this.views.push(Test); break;
+            case ViewTypes.Counter:
+                this.views.push(Countdown); break;
             default:
-                this.view = ErrorView; break;
+                this.views.push(ErrorView); break;
         }
     }
 
     async show() {
-        console.log("Start show: " + ViewTypes[this.type])
-        await this.view(this.matrix)
+        console.log(`Debug 1: ${new Date().toISOString()}`)
+        this.matrix.clear()
+        await wait(1000)
+
+        await this.views[this.activeView](this.matrix)
+        console.log(`Debug 2: ${new Date().toISOString()}`)
+        this.switchActiveView()
     }
 
     async showSync(waitInMS?: number) {
+        console.timeStamp()
         await this.show()
         this.matrix.sync()
+
         if (waitInMS)
             await wait(waitInMS)
+
+        this.matrix.clear()
     }
 
-    // TODO
-    fadeIn() {
-
+    private switchActiveView() {
+        if (this.activeView == this.views.length - 1) {
+            this.activeView = 0
+        } else {
+            this.activeView++
+        }
     }
 
-    // TODO 
-    fadeOut() {
+    toStore() {
 
     }
 }
+
 
 export enum ViewTypes {
     TacticalClockFormat,
@@ -74,5 +101,6 @@ export enum ViewTypes {
     Image,
     ISOClockFormat,
     Spalsh,
-    Test
+    Test,
+    Counter
 }

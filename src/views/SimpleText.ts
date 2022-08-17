@@ -7,7 +7,7 @@ export default async function SimpleText(matrix: LedMatrixInstance) {
     const lines = LayoutUtils.textToLines(
         font,
         matrix.width(),
-        "Text"
+        "Willkommen"
     );
 
     matrix.fgColor(0xff0000).clear();
@@ -21,4 +21,4 @@ export default async function SimpleText(matrix: LedMatrixInstance) {
     ).map(glyph => {
         matrix.drawText(glyph.char, glyph.x, glyph.y);
     });
-}
+} 

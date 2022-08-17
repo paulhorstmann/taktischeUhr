@@ -8,7 +8,7 @@ import {
 
 export const matrixOptions: MatrixOptions = {
     ...LedMatrix.defaultMatrixOptions(),
-    rows: 32, 
+    rows: 32,
     cols: 64,
     chainLength: 2,
     hardwareMapping: GpioMapping.Regular,
@@ -21,4 +21,4 @@ export const runtimeOptions: RuntimeOptions = {
     dropPrivileges: RuntimeFlag.Off,
 };
 
-// console.log('runtime options: ', JSON.stringify(runtimeOptions, null, 2));
+// console.log('runtime options: ', JSON.stringify(runtimeOptions, null, 2));  

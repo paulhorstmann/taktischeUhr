@@ -1,0 +1,6 @@
+Segmentation fault
+
+corrupted double-linked list
+
+malloc(): unsorted double linked list corrupted
+

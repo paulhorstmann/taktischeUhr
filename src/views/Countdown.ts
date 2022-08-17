@@ -1,16 +1,24 @@
 import { Font, HorizontalAlignment, LayoutUtils, LedMatrixInstance, VerticalAlignment } from "rpi-led-matrix";
+import { wait } from "../utils";
+import { BigFont, ClockFont, MediumFont } from "./assets/Fonts";
+import countdown from "countdown"
 
-export default async function Error(matrix: LedMatrixInstance) {
-    const font = new Font('helvR12', `${process.cwd()}/assets/fonts/Clock.bdf`);
-    matrix.font(font);
+export default async function Countdown(matrix: LedMatrixInstance) {
+    const font = BigFont
+    matrix
+        .clear()
+        .font(font)
+        .fgColor(0x0039ac);
+
+    const countdownTxt = countdown(new Date(2000, 0, 1)).toString();
 
     const lines = LayoutUtils.textToLines(
         font,
         matrix.width(),
-        "ERROR"
+        `Mittag in -${countdownTxt}`
     );
 
-    matrix.fgColor(0xff0000).clear();
+    await wait(200)
 
     LayoutUtils.linesToMappedGlyphs(
         lines,
@@ -22,10 +30,4 @@ export default async function Error(matrix: LedMatrixInstance) {
     ).map(glyph => {
         matrix.drawText(glyph.char, glyph.x, glyph.y);
     });
-}
-
-function getTacticalTimeFormat(): string {
-    const now = new Date
-    return now.getHours() + " : " + now.getMinutes()
-    return now.getSeconds() + ""
-}
+}  

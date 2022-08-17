@@ -6,20 +6,23 @@ import ip from "ip"
 import { BigFont, SmallerFont } from "./assets/Fonts"
 
 export default async function Splash(matrix: LedMatrixInstance) {
+    console.log("Start Spalsh")
     const canvas = createCanvas(128, 32)
     const ctx = canvas.getContext('2d')
     const qrcode = createCanvas(32, 32)
 
     const ipAdress = ip.address()
 
-    qr.toCanvas(qrcode, `http://${ipAdress}`, {
+    await qr.toCanvas(qrcode, `http://${ipAdress}`, {
         scale: 1,
         margin: 2
-
     })
 
     ctx.drawImage(qrcode, matrix.width() - 30, 1);
-    matrix.drawBuffer(convertBGRAtoRGB(canvas.toBuffer("raw")));
+
+    await new Promise((resolve) => {
+        resolve(matrix.drawBuffer(convertBGRAtoRGB(canvas.toBuffer("raw"))))
+    })
 
     const font = BigFont
     matrix.font(font);
@@ -64,8 +67,5 @@ export default async function Splash(matrix: LedMatrixInstance) {
     ).map(glyph => {
         matrix.drawText(glyph.char, glyph.x + 2, glyph.y + 4);
     });
-}
-
-async function name() {
-
+    console.log("End Spalsh")
 }

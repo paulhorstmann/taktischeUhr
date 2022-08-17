@@ -28,6 +28,6 @@ export default async function ISOClockFormat(matrix: LedMatrixInstance) {
 
 function getTacticalTimeFormat(): string {
     const now = new Date
-    return (now.getMinutes() < 10 ? '0' : '') + now.getHours() + ":" + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes()
+    return (now.getHours() < 10 ? '0' : '') + now.getHours() + ":" + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes()
 
 }
