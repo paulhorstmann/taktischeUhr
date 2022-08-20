@@ -1,31 +1,26 @@
 import { Font, HorizontalAlignment, LayoutUtils, LedMatrixInstance, VerticalAlignment } from "rpi-led-matrix";
+import Controller from "../Controller";
 
-export default async function Error(matrix: LedMatrixInstance) {
+export default async function Error() {
     const font = new Font('helvR12', `${process.cwd()}/assets/fonts/Clock.bdf`);
-    matrix.font(font);
+    Controller.matrix.font(font);
 
     const lines = LayoutUtils.textToLines(
         font,
-        matrix.width(),
+        Controller.matrix.width(),
         "ERROR"
     );
 
-    matrix.fgColor(0xff0000).clear();
+    Controller.matrix.fgColor(0xff0000).clear();
 
     LayoutUtils.linesToMappedGlyphs(
         lines,
         font.height(),
-        matrix.width(),
-        matrix.height(),
+        Controller.matrix.width(),
+        Controller.matrix.height(),
         HorizontalAlignment.Center,
         VerticalAlignment.Middle
     ).map(glyph => {
-        matrix.drawText(glyph.char, glyph.x, glyph.y);
+        Controller.matrix.drawText(glyph.char, glyph.x, glyph.y);
     });
-}
-
-function getTacticalTimeFormat(): string {
-    const now = new Date
-    return now.getHours() + " : " + now.getMinutes()
-    return now.getSeconds() + ""
 }

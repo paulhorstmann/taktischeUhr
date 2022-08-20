@@ -11,8 +11,11 @@ export const matrixOptions: MatrixOptions = {
     rows: 32,
     cols: 64,
     chainLength: 2,
+    pwmBits: 10,
+    limitRefreshRateHz: 150,
     hardwareMapping: GpioMapping.Regular,
-    showRefreshRate: false,
+    showRefreshRate: true,
+
 };
 
 export const runtimeOptions: RuntimeOptions = {
@@ -20,5 +23,3 @@ export const runtimeOptions: RuntimeOptions = {
     gpioSlowdown: 4,
     dropPrivileges: RuntimeFlag.Off,
 };
-
-// console.log('runtime options: ', JSON.stringify(runtimeOptions, null, 2));  

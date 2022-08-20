@@ -1,0 +1,31 @@
+PID 20221 received SIGSEGV for address: 0xb
+PID 21225 received SIGSEGV for address: 0x7
+PID 22314 received SIGSEGV for address: 0xb
+PID 2231 received SIGSEGV for address: 0xb
+PID 3031 received SIGSEGV for address: 0x3
+PID 1785 received SIGSEGV for address: 0xcff7870c
+PID 1820 received SIGSEGV for address: 0x88ebd1cc
+PID 1838 received SIGSEGV for address: 0xb
+PID 1862 received SIGSEGV for address: 0xcda7870d
+PID 4491 received SIGSEGV for address: 0xb
+PID 25461 received SIGSEGV for address: 0xe6fba00d
+PID 25712 received SIGSEGV for address: 0x7
+/home/paul/testServer/node_modules/segfault-handler/build/Release/segfault-handler.node(+0x2570)[0xae84a570]
+/lib/arm-linux-gnueabihf/libc.so.6(__default_rt_sa_restorer+0x0)[0xb6b40db0]
+PID 25730 received SIGSEGV for address: 0xa4e3200c
+/home/paul/testServer/node_modules/segfault-handler/build/Release/segfault-handler.node(+0x2570)[0xae905570]
+/lib/arm-linux-gnueabihf/libc.so.6(__default_rt_sa_restorer+0x0)[0xb6becdb0]
+PID 25764 received SIGSEGV for address: 0x8000004
+/home/paul/testServer/node_modules/segfault-handler/build/Release/segfault-handler.node(+0x2570)[0xae87b570]
+/lib/arm-linux-gnueabihf/libc.so.6(__default_rt_sa_restorer+0x0)[0xb6b90db0]
+PID 26865 received SIGSEGV for address: 0xb
+PID 27212 received SIGSEGV for address: 0x9d45680c
+PID 27506 received SIGSEGV for address: 0xe9bc980d
+/home/paul/testServer/node_modules/segfault-handler/build/Release/segfault-handler.node(+0x2570)[0xac4d9570]
+/lib/arm-linux-gnueabihf/libc.so.6(__default_rt_sa_restorer+0x0)[0xb6b5bdb0]
+PID 577 received SIGSEGV for address: 0xb
+/home/paul/testServer/node_modules/segfault-handler/build/Release/segfault-handler.node(+0x2574)[0xab634574]
+/lib/arm-linux-gnueabihf/libc.so.6(__default_rt_sa_restorer+0x0)[0xb6bdedb0]
+PID 837 received SIGSEGV for address: 0xd7b0680c
+/home/paul/testServer/node_modules/segfault-handler/build/Release/segfault-handler.node(+0x2574)[0xac5c1574]
+/lib/arm-linux-gnueabihf/libc.so.6(__default_rt_sa_restorer+0x0)[0xb6bfddb0]

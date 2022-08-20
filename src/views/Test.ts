@@ -4,8 +4,9 @@ import { HorizontalAlignment, LayoutUtils, LedMatrixInstance, VerticalAlignment 
 import { convertBGRAtoRGB, wait } from "../utils"
 import ip from "ip"
 import { BigFont, MediumFont, SmallerFont } from "./assets/Fonts"
+import Controller from "../Controller"
 
-export default async function Test(matrix: LedMatrixInstance) {
+export default async function Test() {
     const canvas = createCanvas(128, 32)
     const ctx = canvas.getContext('2d')
     console.log("hello")
@@ -23,53 +24,53 @@ export default async function Test(matrix: LedMatrixInstance) {
 
     })
 
-    ctx.drawImage(qrcode, matrix.width() - 30, 1);
-    matrix.drawBuffer(convertBGRAtoRGB(canvas.toBuffer("raw")));
+    ctx.drawImage(qrcode, Controller.matrix.width() - 30, 1);
+    Controller.matrix.drawBuffer(convertBGRAtoRGB(canvas.toBuffer("raw")));
 
     const font = BigFont
-    matrix.font(font);
+    Controller.matrix.font(font);
 
     const lines = LayoutUtils.textToLines(
         font,
-        matrix.width(),
+        Controller.matrix.width(),
         "Taktische Uhr"
     );
 
-    matrix.fgColor(0x0039ac)
+    Controller.matrix.fgColor(0x0039ac)
 
     LayoutUtils.linesToMappedGlyphs(
         lines,
         font.height(),
-        matrix.width(),
-        matrix.height(),
+        Controller.matrix.width(),
+        Controller.matrix.height(),
         HorizontalAlignment.Left,
         VerticalAlignment.Top
     ).map(glyph => {
-        matrix.drawText(glyph.char, glyph.x + 1, glyph.y + 1);
+        Controller.matrix.drawText(glyph.char, glyph.x + 1, glyph.y + 1);
     });
 
     const fontTwo = MediumFont
-    matrix.font(fontTwo);
+    Controller.matrix.font(fontTwo);
 
     const linesTwo = LayoutUtils.textToLines(
         fontTwo,
-        matrix.width(),
+        Controller.matrix.width(),
         `http://${ipAdress}`
     );
 
-    matrix.fgColor(0x1d3e91)
+    Controller.matrix.fgColor(0x1d3e91)
 
     LayoutUtils.linesToMappedGlyphs(
         linesTwo,
         fontTwo.height(),
-        matrix.width(),
-        matrix.height(),
+        Controller.matrix.width(),
+        Controller.matrix.height(),
         HorizontalAlignment.Left,
         VerticalAlignment.Middle
     ).map(glyph => {
-        matrix.drawText(glyph.char, glyph.x + 2, glyph.y + 4);
+        Controller.matrix.drawText(glyph.char, glyph.x + 2, glyph.y + 4);
     });
 
-    matrix.sync()
+    Controller.matrix.sync()
 }
 

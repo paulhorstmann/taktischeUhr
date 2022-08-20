@@ -38,6 +38,7 @@ export default class WaetherApiHandler {
         this.lon = lon
 
         this.loadIconSet()
+        this.updateData()
     }
 
     async loadIconSet() {

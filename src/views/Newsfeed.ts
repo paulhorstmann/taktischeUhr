@@ -3,26 +3,23 @@ import { Font, HorizontalAlignment, LayoutUtils, LedMatrixInstance, VerticalAlig
 import RSSFeedHandler from "../services/RSSFeedHandler";
 import { convertBGRAtoRGB, replacingUmlauts, wait } from "../utils";
 import { MediumFont, SmallerFont } from "./assets/Fonts";
-import ip from "ip"
-import * as qr from 'qrcode'
+import Controller from "../Controller";
 
 let activeView = 0
 
-export default async function Newsfeed(matrix: LedMatrixInstance) {
-    matrix.clear()
-
+export default async function Newsfeed() {
     await new Promise((resolve) => {
-        resolve(matrix.drawBuffer(RSSFeedHandler.items[activeView].qrcode))
+        resolve(Controller.matrix.drawBuffer(RSSFeedHandler.items[activeView].qrcode))
     })
 
     await wait(500)
 
     const font = SmallerFont
-    matrix.font(font);
-    matrix.fgColor(0xffffff);
+    Controller.matrix.font(font);
+    Controller.matrix.fgColor(0xffffff);
 
     RSSFeedHandler.items[activeView].title.map(glyph => {
-        matrix.drawText(glyph.char, glyph.x + 1, glyph.y);
+        Controller.matrix.drawText(glyph.char, glyph.x + 1, glyph.y);
     });
 
     if (activeView == RSSFeedHandler.items.length - 1) {

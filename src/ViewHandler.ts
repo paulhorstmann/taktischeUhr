@@ -1,7 +1,5 @@
-import { LedMatrixInstance } from "rpi-led-matrix"
 import Splash from "./views/Spash"
 import TacticalClockFormat from "./views/TacticalClockFormat"
-import Weather from "./views/Weather"
 import Newsfeed from "./views/Newsfeed"
 import ISOClockFormat from "./views/ISOClockFormat"
 import Image from "./views/Image"
@@ -12,19 +10,17 @@ import Countdown from "./views/Countdown"
 
 import { wait } from "./utils"
 
-import RSSFeedHandler from "./services/RSSFeedHandler";
 import WeatherIcons from "./views/WeatherIcons"
+import Controller from "./Controller"
 
 export class ViewHandler {
-    matrix: LedMatrixInstance
     type: ViewTypes
     needToRefresh: boolean
-    views: Array<(matrix: LedMatrixInstance, activeView?: number) => Promise<void>>;
+    views: Array<(activeView?: number) => Promise<void>>;
     activeView: number
     isSelected: boolean
 
-    constructor(matrix: LedMatrixInstance, type: ViewTypes, needToRefresh: boolean = false, isSelected = true) {
-        this.matrix = matrix
+    constructor(type: ViewTypes, needToRefresh: boolean = false, isSelected = true) {
         this.type = type
         this.needToRefresh = needToRefresh
         this.views = []
@@ -59,24 +55,21 @@ export class ViewHandler {
     }
 
     async show() {
-        console.log(`Debug 1: ${new Date().toISOString()}`)
-        this.matrix.clear()
-        await wait(1000)
+        Controller.matrix.clear()
+        await this.views[this.activeView]()
 
-        await this.views[this.activeView](this.matrix)
-        console.log(`Debug 2: ${new Date().toISOString()}`)
         this.switchActiveView()
     }
 
     async showSync(waitInMS?: number) {
         console.timeStamp()
         await this.show()
-        this.matrix.sync()
+        Controller.matrix.sync()
 
         if (waitInMS)
             await wait(waitInMS)
 
-        this.matrix.clear()
+        Controller.matrix.clear()
     }
 
     private switchActiveView() {
@@ -85,10 +78,6 @@ export class ViewHandler {
         } else {
             this.activeView++
         }
-    }
-
-    toStore() {
-
     }
 }
 

@@ -2,8 +2,8 @@ import express from "express";
 import RSSFeedHandler from "../services/RSSFeedHandler";
 
 export default class Webserver {
-    app = express()
-    port: number
+    private app = express()
+    private port: number
 
     constructor(port: number) {
         this.port = port
