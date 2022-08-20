@@ -2,16 +2,16 @@ import { createCanvas, loadImage } from "canvas";
 
 import * as fs from 'fs/promises';
 import { LedMatrixInstance } from "rpi-led-matrix";
+import Controller from "../Controller";
 import WaetherApiHandler from "../services/WeatherApiHandler";
 import { convertBGRAtoRGB } from "../utils";
 import { MediumFont } from "./assets/Fonts";
 
-export default async function WeatherIcons(matrix: LedMatrixInstance) {
+export default async function WeatherIcons() {
     const canvas = createCanvas(128, 32)
     const ctx = canvas.getContext('2d')
 
     const weatherData = WaetherApiHandler.data
-
 
     if (WaetherApiHandler.loaded)
         await WaetherApiHandler.waitForLoading()
@@ -30,12 +30,12 @@ export default async function WeatherIcons(matrix: LedMatrixInstance) {
     const buffer = canvas.toBuffer('image/png')
     fs.writeFile('./image.png', buffer)
 
-    matrix.drawBuffer(convertBGRAtoRGB(canvas.toBuffer("raw")));
+    Controller.matrix.drawBuffer(convertBGRAtoRGB(canvas.toBuffer("raw")));
 
     const font = MediumFont
-    matrix.font(font);
+    Controller.matrix.font(font);
 
-    matrix.fgColor(0xb3b3b3);
+    Controller.matrix.fgColor(0xb3b3b3);
     const xOffsetsWeekdays = [
         9,
         34,
@@ -45,22 +45,6 @@ export default async function WeatherIcons(matrix: LedMatrixInstance) {
         128,
     ]
     weatherData.forEach((weatherItem, i) => {
-        matrix.drawText(weatherItem.day, xOffsetsWeekdays[i], 23);
+        Controller.matrix.drawText(weatherItem.day, xOffsetsWeekdays[i], 23);
     })
-
-
-    // LayoutUtils.linesToMappedGlyphs(
-    //     lines,
-    //     font.height(),
-    //     matrix.width(),
-    //     matrix.height(),
-    //     HorizontalAlignment.Left,
-    //     VerticalAlignment.Bottom
-    // ).map((glyph, i) => {
-    //     let xOffset = 10
-    //     // if () {
-    //     //     xOffset = 6
-    //     // }
-    // });
-
 }
