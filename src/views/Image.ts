@@ -9,25 +9,33 @@ import { MediumFont } from './assets/Fonts';
 import Controller from '../Controller';
 
 export default async function Image() {
-    const canvas = createCanvas(128, 32)
-    const ctx = canvas.getContext('2d')
 
-    try {
-        ctx.drawImage(
-            await loadImage(await fs.readFile(path.join(process.cwd(), `assets/img/thw-white.png`))),
-            0, 0
-        )
-        Controller.matrix.drawBuffer(convertBGRAtoRGB(canvas.toBuffer("raw")));
+    await new Promise(
+        async resolve => {
 
-    } catch (error) {
+            const canvas = createCanvas(128, 32)
+            const ctx = canvas.getContext('2d')
 
-        console.log(error)
+            try {
+                ctx.drawImage(
+                    await loadImage(await fs.readFile(path.join(process.cwd(), `assets/img/thw-white.png`))),
+                    0, 0
+                )
+                Controller.matrix.drawBuffer(convertBGRAtoRGB(canvas.toBuffer("raw")));
 
-        const font = MediumFont
-        Controller.matrix.font(font);
+            } catch (error) {
 
-        Controller.matrix.fgColor(0xb3b3b3);
-        Controller.matrix.drawText("Ein Fehler ist", 2, 2);
-        Controller.matrix.drawText("aufgetreten", 2, 10);
-    }
+                console.log(error)
+
+                const font = MediumFont
+                Controller.matrix.font(font);
+
+                Controller.matrix.fgColor(0xb3b3b3);
+                Controller.matrix.drawText("Ein Fehler ist", 2, 2);
+                Controller.matrix.drawText("aufgetreten", 2, 10);
+            }
+
+            resolve("Display")
+        }
+    )
 }  

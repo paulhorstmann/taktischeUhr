@@ -60,20 +60,6 @@ export default class Controller {
         new ViewHandler(ViewTypes.SimpleText),
     ]
 
-    static async waitForMatrix() {
-        return new Promise(
-            async resolve => {
-                console.log(typeof Controller.matrix)
-                console.log(!Controller.matrix)
-                while (!Controller.matrix) {
-                    console.log("Wait for Initial");
-                    await wait(1000)
-                }
-                resolve("Ok")
-            }
-        )
-    }
-
     static initMatrix() {
         return new Promise(res => {
             Controller.matrix = new LedMatrix(matrixOptions, runtimeOptions)

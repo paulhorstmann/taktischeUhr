@@ -3,15 +3,14 @@ import Loop from "./Loop";
 import { wait } from "./utils";
 import Webserver from "./web/Webserver";
 
-new Controller();
-// const webserver = new Webserver(80);
 
 (async () => {
-    await wait(1000)
+    const controller = new Controller();
     await Controller.initMatrix()
-    await Controller.waitForMatrix()
+    new Webserver(80);
     const loop = new Loop()
-})()
+})();
+
 
 /// Handel Exit ///
 process.stdin.resume();
@@ -21,7 +20,6 @@ function exitHandler(options: any, exitCode: number) {
         Controller.matrix.clear()
         console.log("Clear Matrix")
     }
-    if (exitCode || exitCode === 0) console.log(exitCode);
     if (options.exit) process.exit();
 }
 

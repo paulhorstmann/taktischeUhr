@@ -3,25 +3,34 @@ import Controller from "../Controller";
 import { ClockFont } from "./assets/Fonts";
 
 export default async function show() {
-    const font = ClockFont
-    Controller.matrix.font(font);
-    const lines = LayoutUtils.textToLines(
-        font,
-        Controller.matrix.width(),
-        getTacticalTimeFormat()
-    );
 
-    Controller.matrix.fgColor(0xff0000).clear();
-    LayoutUtils.linesToMappedGlyphs(
-        lines,
-        font.height(),
-        Controller.matrix.width(),
-        Controller.matrix.height(),
-        HorizontalAlignment.Center,
-        VerticalAlignment.Middle
-    ).map(glyph => {
-        Controller.matrix.drawText(glyph.char, glyph.x, glyph.y);
-    });
+
+    await new Promise(
+        async resolve => {
+
+            const font = ClockFont
+            Controller.matrix.font(font);
+            const lines = LayoutUtils.textToLines(
+                font,
+                Controller.matrix.width(),
+                getTacticalTimeFormat()
+            );
+
+            Controller.matrix.fgColor(0xff0000).clear();
+            LayoutUtils.linesToMappedGlyphs(
+                lines,
+                font.height(),
+                Controller.matrix.width(),
+                Controller.matrix.height(),
+                HorizontalAlignment.Center,
+                VerticalAlignment.Middle
+            ).map(glyph => {
+                Controller.matrix.drawText(glyph.char, glyph.x, glyph.y);
+            });
+            resolve("Display")
+        }
+    )
+
 }
 
 const monthNames: Array<string> = [

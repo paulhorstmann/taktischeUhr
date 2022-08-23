@@ -7,64 +7,76 @@ import { BigFont, SmallerFont } from "./assets/Fonts"
 import Controller from "../Controller"
 
 export default async function Splash() {
-    const canvas = createCanvas(128, 32)
-    const ctx = canvas.getContext('2d')
-    const qrcode = createCanvas(32, 32)
 
-    const ipAdress = ip.address()
+    await new Promise(
+        async resolve => {
+            const canvas = createCanvas(128, 32)
+            const ctx = canvas.getContext('2d')
+            const qrcode = createCanvas(32, 32)
 
-    await qr.toCanvas(qrcode, `http://${ipAdress}`, {
-        scale: 1,
-        margin: 2
-    })
+            const ipAdress = ip.address()
 
-    ctx.drawImage(qrcode, Controller.matrix.width() - 30, 1);
+            await qr.toCanvas(qrcode, `http://${ipAdress}`, {
+                scale: 1,
+                margin: 2
+            })
 
-    await new Promise((resolve) => {
-        resolve(Controller.matrix.drawBuffer(convertBGRAtoRGB(canvas.toBuffer("raw"))))
-    })
+            await new Promise((resolve) => {
+                ctx.drawImage(qrcode, Controller.matrix.width() - 30, 1);
+                resolve("Drawed")
+            })
 
-    const font = BigFont
-    Controller.matrix.font(font);
+            await new Promise((resolve) => {
+                Controller.matrix.drawBuffer(convertBGRAtoRGB(canvas.toBuffer("raw")))
+                resolve("To Buffer")
+            })
 
-    const lines = LayoutUtils.textToLines(
-        font,
-        Controller.matrix.width(),
-        "Taktische Uhr"
-    );
+            const font = BigFont
+            Controller.matrix.font(font);
 
-    Controller.matrix.fgColor(0x0039ac)
+            const lines = LayoutUtils.textToLines(
+                font,
+                Controller.matrix.width(),
+                "Taktische Uhr"
+            );
 
-    LayoutUtils.linesToMappedGlyphs(
-        lines,
-        font.height(),
-        Controller.matrix.width(),
-        Controller.matrix.height(),
-        HorizontalAlignment.Left,
-        VerticalAlignment.Top
-    ).map(glyph => {
-        Controller.matrix.drawText(glyph.char, glyph.x + 1, glyph.y + 1);
-    });
+            Controller.matrix.fgColor(0x0039ac)
 
-    const fontTwo = SmallerFont
-    Controller.matrix.font(fontTwo)
+            LayoutUtils.linesToMappedGlyphs(
+                lines,
+                font.height(),
+                Controller.matrix.width(),
+                Controller.matrix.height(),
+                HorizontalAlignment.Left,
+                VerticalAlignment.Top
+            ).map(glyph => {
+                Controller.matrix.drawText(glyph.char, glyph.x + 1, glyph.y + 1);
+            });
 
-    const linesTwo = LayoutUtils.textToLines(
-        fontTwo,
-        Controller.matrix.width(),
-        `http://${ipAdress}`
-    );
+            const fontTwo = SmallerFont
+            Controller.matrix.font(fontTwo)
 
-    Controller.matrix.fgColor(0x1d3e91)
+            const linesTwo = LayoutUtils.textToLines(
+                fontTwo,
+                Controller.matrix.width(),
+                `http://${ipAdress}`
+            );
 
-    LayoutUtils.linesToMappedGlyphs(
-        linesTwo,
-        fontTwo.height(),
-        Controller.matrix.width(),
-        Controller.matrix.height(),
-        HorizontalAlignment.Left,
-        VerticalAlignment.Middle
-    ).map(glyph => {
-        Controller.matrix.drawText(glyph.char, glyph.x + 2, glyph.y + 4);
-    });
+            Controller.matrix.fgColor(0x1d3e91)
+
+            LayoutUtils.linesToMappedGlyphs(
+                linesTwo,
+                fontTwo.height(),
+                Controller.matrix.width(),
+                Controller.matrix.height(),
+                HorizontalAlignment.Left,
+                VerticalAlignment.Middle
+            ).map(glyph => {
+                Controller.matrix.drawText(glyph.char, glyph.x + 2, glyph.y + 4);
+            });
+
+            resolve("Display")
+        }
+    )
+
 }

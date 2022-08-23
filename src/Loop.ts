@@ -7,8 +7,9 @@ export default class Loop {
 
     constructor() {
         (async () => {
-            console.log(`Start at: ${new Date().toISOString()}`)
+            console.log(`\n\nStart at: ${new Date().toISOString()}`)
             await new ViewHandler(ViewTypes.Spalsh).showSync(5000)
+            await wait(100)
 
             // Mainloop
             while (true) {
@@ -28,6 +29,11 @@ export default class Loop {
 
             const activeView: ViewHandler = Controller.views[this.activeViewIndicator]
 
+            if (activeView.disabled) {
+                this.switchActiveViewIndicator()
+                continue
+            }
+
             if (activeView.needToRefresh) {
                 const refreshInterval = setInterval(() => {
                     activeView.showSync()
@@ -38,7 +44,6 @@ export default class Loop {
                 await activeView.showSync(Controller.switchInterval)
             }
 
-            Controller.matrix.clear()
             this.switchActiveViewIndicator()
 
         }

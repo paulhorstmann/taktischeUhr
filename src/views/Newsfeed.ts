@@ -8,23 +8,29 @@ import Controller from "../Controller";
 let activeView = 0
 
 export default async function Newsfeed() {
-    await new Promise((resolve) => {
-        resolve(Controller.matrix.drawBuffer(RSSFeedHandler.items[activeView].qrcode))
-    })
+    await new Promise(
+        async resolve => {
+            await new Promise((resolve) => {
+                Controller.matrix.drawBuffer(RSSFeedHandler.items[activeView].qrcode)
+                resolve("Check")
+            })
 
-    await wait(500)
+            await wait(500)
 
-    const font = SmallerFont
-    Controller.matrix.font(font);
-    Controller.matrix.fgColor(0xffffff);
+            const font = SmallerFont
+            Controller.matrix.font(font);
+            Controller.matrix.fgColor(0xffffff);
 
-    RSSFeedHandler.items[activeView].title.map(glyph => {
-        Controller.matrix.drawText(glyph.char, glyph.x + 1, glyph.y);
-    });
+            RSSFeedHandler.items[activeView].title.map(glyph => {
+                Controller.matrix.drawText(glyph.char, glyph.x + 1, glyph.y);
+            });
 
-    if (activeView == RSSFeedHandler.items.length - 1) {
-        activeView = 0
-    } else {
-        activeView++
-    }
+            if (activeView == RSSFeedHandler.items.length - 1) {
+                activeView = 0
+            } else {
+                activeView++
+            }
+            resolve("Display")
+        }
+    )
 }

@@ -19,6 +19,7 @@ export class ViewHandler {
     views: Array<(activeView?: number) => Promise<void>>;
     activeView: number
     isSelected: boolean
+    disabled = false
 
     constructor(type: ViewTypes, needToRefresh: boolean = false, isSelected = true) {
         this.type = type
@@ -55,21 +56,28 @@ export class ViewHandler {
     }
 
     async show() {
-        Controller.matrix.clear()
+        await new Promise(
+            resolve => {
+                Controller.matrix.clear()
+                resolve("ok")
+            }
+        )
         await this.views[this.activeView]()
-
         this.switchActiveView()
     }
 
     async showSync(waitInMS?: number) {
         console.timeStamp()
         await this.show()
-        Controller.matrix.sync()
-
+        await new Promise(
+            resolve => {
+                Controller.matrix.sync()
+                resolve("ok")
+            }
+        )
+        await wait(100)
         if (waitInMS)
             await wait(waitInMS)
-
-        Controller.matrix.clear()
     }
 
     private switchActiveView() {

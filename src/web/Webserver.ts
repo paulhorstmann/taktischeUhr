@@ -1,4 +1,5 @@
 import express from "express";
+import Controller from "../Controller";
 import RSSFeedHandler from "../services/RSSFeedHandler";
 
 export default class Webserver {
@@ -19,6 +20,15 @@ export default class Webserver {
             } catch {
                 res.send("Ein Fehler ist aufgetreten")
             }
+        })
+
+        this.app.get("/change", (req, res) => {
+
+            Controller.views[3].disabled = !Controller.views[3].disabled
+
+            console.log("Change")
+
+            res.send("Alles gut")
         })
 
         this.app.listen(port, () => {
