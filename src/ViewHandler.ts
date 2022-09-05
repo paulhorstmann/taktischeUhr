@@ -67,8 +67,8 @@ export class ViewHandler {
     }
 
     async showSync(waitInMS?: number) {
-        console.timeStamp()
         await this.show()
+        await wait(100)
         await new Promise(
             resolve => {
                 Controller.matrix.sync()

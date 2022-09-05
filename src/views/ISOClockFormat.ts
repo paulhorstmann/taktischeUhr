@@ -10,7 +10,7 @@ export default async function ISOClockFormat() {
 
             const lines = LayoutUtils.textToLines(
                 font,
-                Controller.matrix.width(),
+                128,
                 getTacticalTimeFormat()
             );
 
@@ -18,7 +18,7 @@ export default async function ISOClockFormat() {
             LayoutUtils.linesToMappedGlyphs(
                 lines,
                 font.height(),
-                Controller.matrix.width(),
+                128,
                 Controller.matrix.height(),
                 HorizontalAlignment.Center,
                 VerticalAlignment.Middle

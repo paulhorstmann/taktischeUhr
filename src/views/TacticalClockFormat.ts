@@ -12,7 +12,7 @@ export default async function show() {
             Controller.matrix.font(font);
             const lines = LayoutUtils.textToLines(
                 font,
-                Controller.matrix.width(),
+                128,
                 getTacticalTimeFormat()
             );
 
@@ -20,7 +20,7 @@ export default async function show() {
             LayoutUtils.linesToMappedGlyphs(
                 lines,
                 font.height(),
-                Controller.matrix.width(),
+                128,
                 Controller.matrix.height(),
                 HorizontalAlignment.Center,
                 VerticalAlignment.Middle
@@ -51,5 +51,5 @@ const monthNames: Array<string> = [
 
 function getTacticalTimeFormat(): string {
     const now = new Date
-    return "" + now.getDate() + (now.getHours() < 10 ? '0' : '') + now.getHours() + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes() + monthNames[now.getMonth()] + (now.getFullYear() + "").slice(2, 4)
+    return "" + (now.getDate() < 10 ? '0' : '') + now.getDate() + (now.getHours() < 10 ? '0' : '') + now.getHours() + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes() + monthNames[now.getMonth()] + (now.getFullYear() + "").slice(2, 4)
 }

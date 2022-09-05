@@ -169,7 +169,7 @@
 
 #imageUpload
     .cardBody
-        .radioImageSelect
+        label
             display: flex
             justify-content: space-between
             align-items: center
@@ -177,11 +177,13 @@
             border-radius: 10px
             padding: 15px 
             margin-bottom: 10px
+            width: 100%
 
             &:last-child
                 margin-bottom: 0px
 
-            label
+            .checkmark    
+                content: ""
                 display: flex
                 justify-content: center
                 align-items: center
@@ -190,18 +192,27 @@
                 border: solid 1.5px #CBCBCB
                 border-radius: 50%
 
-            input:checked+label
+            input:checked ~ .checkmark
                 border: solid 2px #0f8cdc
 
-            input:checked+label::before
+            input:checked ~ .checkmark::after
+                position: relative
+                top: 0.3px
                 content: ''
                 width: 12px
                 height: 12px
                 background: #0f8cdc
                 border-radius: 50%
+                animation: display 0.5s forwards infinite linear
+
+            
+            input ~ .checkmark::after
+                animation: hide 0.5s
 
             .imageContent
                 justify-self: center
+                width: 250px
+                border-radius: 10px
 
             .trashIcon
                 width: 30px
@@ -215,3 +226,6 @@
 
         input
             display: none
+
+.wordbreak
+    word-break: break-all

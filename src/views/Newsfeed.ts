@@ -10,6 +10,7 @@ let activeView = 0
 export default async function Newsfeed() {
     await new Promise(
         async resolve => {
+            await RSSFeedHandler.waitForResolve()
             await new Promise((resolve) => {
                 Controller.matrix.drawBuffer(RSSFeedHandler.items[activeView].qrcode)
                 resolve("Check")

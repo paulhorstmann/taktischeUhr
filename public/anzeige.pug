@@ -18,7 +18,7 @@ html(lang="de")
 			.container.center#format 
 				.input-container
 					label(for="ssid") Zeitformat
-					input#ssid(type="text" value="DDhhmmMMMYY")
+					input#ssid(type="text" value="DDhhmmMMMYY" disabled)
 
 
 			.container.center#addon
@@ -31,17 +31,17 @@ html(lang="de")
 							.text Wetter
 
 						label.switch
-							input(type="checkbox")
+							input(type="checkbox" checked=viewState.weather data-name="weather")
 							span.slider.round
 					.cardBody
 						.zipcode
 							img(src="./assets/img/icons/check.svg")#checkLocationIcon
 							label(for="weatherZIP") Standort
-							input(type="text" placeholder="Stadt oder Postleitzahl")#weatherZIP
+							input(type="text" placeholder="Stadt oder Postleitzahl" value=store.weather.stadtName)#weatherZIP
 							#postleitzahlResponse
 						.apiKey
 							label(for="apiWeatherKey") API Key
-							input(type="text" placeholder="32 stelliger Key")#openWeatherApiKey 
+							input(type="text" placeholder="32 stelliger Key" value=store.weather.apiKey)#openWeatherApiKey 
 							p 
 								| Erstelle einen API KEY unter 
 								a(href="https://openweathermap.org/") openweathermap.org 
@@ -53,25 +53,19 @@ html(lang="de")
 							.text Bild anzeigen
 
 						label.switch
-							input(type="checkbox")
+							input(type="checkbox" checked=viewState.image data-name="image")
 							span.slider.round
 
 					.cardBody
-						.radioImageSelect
-							input(type="radio" name="imageUpload" )#imageUpload1
-							label(for="imageUpload")
+						label(for="thwpri")
+							input(type="radio" name="imageUpload" value="thwpri" checked)#thwpri
+							.checkmark
 							img(src="./assets/img/example/thwLogo.svg").imageContent
-							img(src="./assets/img/icons/trash.svg" alt="").trashIcon
 
-						.radioImageSelect
-							input(type="radio" name="imageUpload")#imageUpload2
-							label(for="imageUpload")
-							img(src="./assets/img/example/thwLogo.svg").imageContent
-							img(src="./assets/img/icons/trash.svg" alt="").trashIcon
-
-						.uploadBtn
-							label(for="").btn Bild hochladen
-							input(type="file")#image
+						label(for="thwSec")
+							input(type="radio" name="imageUpload" value="thwSec")#thwSec
+							.checkmark
+							img(src="./assets/img/example/thwLogoBlack.svg").imageContent
 
 				.cardAddon#rssFeed
 					.cardHeader
@@ -80,11 +74,11 @@ html(lang="de")
 							.text THW Newsfeed
 
 						label.switch
-							input(type="checkbox")
+							input(type="checkbox" checked=viewState.newsfeed data-name="newsfeed")
 							span.slider.round
 					.cardBody
-						label(for="weatherZIP") THW RSS URL
-						input(type="url" value="https://www.thw.de/SiteGlobals/Functions/RSS/DE/Feed/RSSNewsfeed_Meldungen_Gesamt.xml?nn=924198")
+						p Aktuelle Meldungung bezogen von: 
+						a(href="https://www.thw.de/SiteGlobals/Functions/RSS/DE/Feed/RSSNewsfeed_Meldungen_Gesamt.xml?nn=924198" target="_blank").wordbreak https://www.thw.de/SiteGlobals/Functions/RSS/DE/Feed/RSSNewsfeed_Meldungen_Gesamt.xml?nn=924198
 
 				.cardAddon#texteingabe
 					.cardHeader
@@ -93,11 +87,11 @@ html(lang="de")
 							.text Texteingabe
 
 						label.switch
-							input(type="checkbox")
+							input(type="checkbox" checked=viewState.simpleText data-name="simpleText")
 							span.slider.round
 					.cardBody
 						label(for="weatherZIP") Anzuzeigender Text
-						input(type="text" value="Beispieltext")
+						input#simpleText(type="text" value=store.text)
 
 				.cardAddon#iso
 					.cardHeader
@@ -106,7 +100,7 @@ html(lang="de")
 							.text ISO 8601 Uhrzeitformat
 
 						label.switch
-							input(type="checkbox")
+							input(type="checkbox" checked=viewState.isoClockFormat data-name="isoClockFormat")
 							span.slider.round
 					.cardBody
 						p ISO 8601 ist ein internationaler Standard der ISO, der Empfehlungen über numerische Datumsformate und Zeitangaben enthält

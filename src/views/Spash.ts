@@ -22,7 +22,7 @@ export default async function Splash() {
             })
 
             await new Promise((resolve) => {
-                ctx.drawImage(qrcode, Controller.matrix.width() - 30, 1);
+                ctx.drawImage(qrcode, 128 - 30, 1);
                 resolve("Drawed")
             })
 
@@ -36,7 +36,7 @@ export default async function Splash() {
 
             const lines = LayoutUtils.textToLines(
                 font,
-                Controller.matrix.width(),
+                128,
                 "Taktische Uhr"
             );
 
@@ -45,8 +45,8 @@ export default async function Splash() {
             LayoutUtils.linesToMappedGlyphs(
                 lines,
                 font.height(),
-                Controller.matrix.width(),
-                Controller.matrix.height(),
+                128,
+                32,
                 HorizontalAlignment.Left,
                 VerticalAlignment.Top
             ).map(glyph => {
@@ -58,7 +58,7 @@ export default async function Splash() {
 
             const linesTwo = LayoutUtils.textToLines(
                 fontTwo,
-                Controller.matrix.width(),
+                128,
                 `http://${ipAdress}`
             );
 
@@ -67,7 +67,7 @@ export default async function Splash() {
             LayoutUtils.linesToMappedGlyphs(
                 linesTwo,
                 fontTwo.height(),
-                Controller.matrix.width(),
+                128,
                 Controller.matrix.height(),
                 HorizontalAlignment.Left,
                 VerticalAlignment.Middle

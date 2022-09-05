@@ -5,58 +5,68 @@ import { ViewHandler, ViewTypes } from "./ViewHandler"
 export default class Loop {
     activeViewIndicator: number = 0
 
-    constructor() {
-        (async () => {
-            console.log(`\n\nStart at: ${new Date().toISOString()}`)
-            await new ViewHandler(ViewTypes.Spalsh).showSync(5000)
-            await wait(100)
+    async mainLoop() {
+        console.log(`\n\nStart at: ${new Date().toISOString()}`)
+        await new ViewHandler(ViewTypes.Spalsh).showSync(5000)
 
-            // Mainloop
-            while (true) {
-                if (Controller.isLUKModeOn) {
-                    await this.lukMode()
-                } else {
-                    await this.startLoop()
-                }
-                Controller.noChanges = true
+        // Mainloop
+        while (true) {
+            Controller.noChanges = true
+            if (Controller.isLUKModeOn) {
+                await this.lukMode()
+            } else {
+                await this.startLoop()
             }
-        })()
+        }
     }
 
     async startLoop() {
         while (Controller.noChanges) {
-            console.log("\n\nChange Counter: " + ++Controller.changes + " - " + ViewTypes[Controller.views[this.activeViewIndicator].type] + "\n")
 
-            const activeView: ViewHandler = Controller.views[this.activeViewIndicator]
+            const activeView: any = Object.values(Controller.views)[this.activeViewIndicator]
 
+            console.log("\n\nChange Counter: " + ++Controller.changes + " - " + ViewTypes[activeView.type] + "\n")
             if (activeView.disabled) {
                 this.switchActiveViewIndicator()
+                console.log("is disabled");
                 continue
             }
 
             if (activeView.needToRefresh) {
                 const refreshInterval = setInterval(() => {
                     activeView.showSync()
+                    if (Controller.isLUKModeOn) {
+                        clearInterval(refreshInterval)
+                    }
                 }, 100)
-                await wait(Controller.switchInterval)
+                for (let i = 0; i < Controller.switchInterval; i++) {
+                    if (Controller.isLUKModeOn) {
+                        break
+                    }
+                    await wait(1)
+                }
                 clearInterval(refreshInterval)
             } else {
                 await activeView.showSync(Controller.switchInterval)
             }
 
             this.switchActiveViewIndicator()
-
         }
     }
 
     async lukMode() {
+
+        const tCLock = new ViewHandler(ViewTypes.TacticalClockFormat, true)
+        console.log("Luk Mode on")
+
         while (Controller.noChanges) {
-            new ViewHandler(ViewTypes.TacticalClockFormat, true)
+            await tCLock.showSync(100)
         }
+        console.log("LUK off")
     }
 
     switchActiveViewIndicator() {
-        if (this.activeViewIndicator == Controller.views.length - 1) {
+        if (this.activeViewIndicator == Object.values(Controller.views).length - 1) {
             this.activeViewIndicator = 0
         } else {
             this.activeViewIndicator++

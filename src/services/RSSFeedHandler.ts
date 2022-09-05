@@ -16,55 +16,61 @@ interface RSSFeedItem {
     link: string
 }
 
-
 export default class RSSFeedHandler {
     URL: string
     static items: Array<RSSFeedItem> = []
+    static ready = false
 
     constructor(URL: string) {
         this.URL = URL
         RSSFeedHandler.update()
     }
 
-    static addRSSFeedItem(itemTitle: string = "RSSFeed wird geladen", link: string = `http://${ipAdress}`) {
-        const font = SmallerFont
+    static async addRSSFeedItem(itemTitle: string = "RSSFeed wird geladen", link: string = `http://${ipAdress}`) {
 
         const lines = LayoutUtils.textToLines(
-            font,
+            SmallerFont,
             96,
             replacingUmlauts(itemTitle)
         );
 
         const title = LayoutUtils.linesToMappedGlyphs(
             lines,
-            font.height(),
+            SmallerFont.height(),
             128,
             32,
             HorizontalAlignment.Left,
             VerticalAlignment.Middle
         )
 
-
         const canvas = createCanvas(128, 32)
         const ctx = canvas.getContext('2d')
 
         const qrcode = createCanvas(32, 32)
 
-        qr.toCanvas(qrcode, `http://${ipAdress}/f/${RSSFeedHandler.items.length}`, {
+        await qr.toCanvas(qrcode, `http://${ipAdress}/f/${RSSFeedHandler.items.length}`, {
             scale: 1,
             margin: 2
         })
 
-        ctx.drawImage(qrcode, 98, 1);
 
-        RSSFeedHandler.items.push({
-            title: title,
-            qrcode: convertBGRAtoRGB(canvas.toBuffer("raw")),
-            link: link
+        await new Promise((resolve) => {
+            ctx.drawImage(qrcode, 98, 1);
+            resolve("Check")
+        })
+
+
+        await new Promise((resolve) => {
+            RSSFeedHandler.items.push({
+                title: title,
+                qrcode: convertBGRAtoRGB(canvas.toBuffer("raw")),
+                link: link
+            })
+            resolve("Check")
         })
     }
 
-    async waitForResolve() {
+    static async waitForResolve() {
         while (RSSFeedHandler.items.length == 0) {
             await wait(1000)
             console.log("Wait for RSSFeed")
@@ -74,16 +80,12 @@ export default class RSSFeedHandler {
     static async update() {
         const feed = await parser.parseURL('https://www.thw.de/SiteGlobals/Functions/RSS/DE/Feed/RSSNewsfeed_Meldungen_Gesamt.xml');
 
-        // console.log(feed);
+        console.log(feed);
 
-
-        feed.items.forEach(item => {
-            RSSFeedHandler.addRSSFeedItem(item.title, item.link)
-        });
-
-        // feed.items.forEach(item => {
-        //     console.log(item.title + ':' + item.link)
-        // });       
+        for (let i = 0; i < feed.items.length; i++) {
+            const item = feed.items[i]
+            await RSSFeedHandler.addRSSFeedItem(item.title, item.link)
+        }
     }
 }
 

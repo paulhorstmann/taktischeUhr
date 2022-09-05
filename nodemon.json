@@ -4,7 +4,10 @@
     ],
     "ext": "ts,json",
     "ignore": [
-        "src/**/*.spec.ts"
+        "src/**/*.spec.ts",
+        "public/**/*",
+        "public/**/*.js",
+        "public/**/*.pug"
     ],
     "exec": "ts-node ./src/app.ts",
     "delay": "1000"

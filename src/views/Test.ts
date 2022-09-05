@@ -10,10 +10,6 @@ export default async function Test() {
     const canvas = createCanvas(128, 32)
     const ctx = canvas.getContext('2d')
     console.log("hello")
-
-    // ctx.fillStyle = "#ffffff"
-    // ctx.fillRect(0, 0, 128, 32)
-
     const qrcode = createCanvas(32, 32)
 
     const ipAdress = ip.address()
@@ -24,7 +20,7 @@ export default async function Test() {
 
     })
 
-    ctx.drawImage(qrcode, Controller.matrix.width() - 30, 1);
+    ctx.drawImage(qrcode, 128 - 30, 1);
     Controller.matrix.drawBuffer(convertBGRAtoRGB(canvas.toBuffer("raw")));
 
     const font = BigFont
@@ -32,7 +28,7 @@ export default async function Test() {
 
     const lines = LayoutUtils.textToLines(
         font,
-        Controller.matrix.width(),
+        128,
         "Taktische Uhr"
     );
 
@@ -41,7 +37,7 @@ export default async function Test() {
     LayoutUtils.linesToMappedGlyphs(
         lines,
         font.height(),
-        Controller.matrix.width(),
+        128,
         Controller.matrix.height(),
         HorizontalAlignment.Left,
         VerticalAlignment.Top
@@ -54,7 +50,7 @@ export default async function Test() {
 
     const linesTwo = LayoutUtils.textToLines(
         fontTwo,
-        Controller.matrix.width(),
+        128,
         `http://${ipAdress}`
     );
 
@@ -63,7 +59,7 @@ export default async function Test() {
     LayoutUtils.linesToMappedGlyphs(
         linesTwo,
         fontTwo.height(),
-        Controller.matrix.width(),
+        128,
         Controller.matrix.height(),
         HorizontalAlignment.Left,
         VerticalAlignment.Middle

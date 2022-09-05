@@ -15,7 +15,7 @@ export default async function Countdown() {
 
     const lines = LayoutUtils.textToLines(
         font,
-        Controller.matrix.width(),
+        128,
         `Mittag in -${countdownTxt}`
     );
 
@@ -24,7 +24,7 @@ export default async function Countdown() {
     LayoutUtils.linesToMappedGlyphs(
         lines,
         font.height(),
-        Controller.matrix.width(),
+        128,
         Controller.matrix.height(),
         HorizontalAlignment.Center,
         VerticalAlignment.Middle

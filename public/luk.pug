@@ -1,0 +1,39 @@
+doctype html
+html(lang="de")
+	head
+		meta(charset="UTF-8")
+		title Luk modus		
+
+		include includes/header.pug
+
+		link(rel="stylesheet" href="./assets/css/luk.min.css")
+
+	body(style="opacity: 0")
+		include includes/loader.pug
+		include includes/nav.pug
+
+		main
+			header.container
+				h1 LUK Modus
+				hr
+
+			.container.center#LUK
+				.card#LUKCard
+					.inner
+						.cardHeader
+							.title 
+								img(src="/assets/img/icons/addon/error.svg" alt="").icon
+								.text Luk Modus
+
+							label.switch
+								input(type="checkbox")#lukModeToggle
+								span.slider.round
+						.cardBody
+							p Im LUK Modus werden alle Addons ausgeschaltet und auf dem Display ist nur noch die Taktischezeit zu sehen
+
+				
+
+		script(type="text/javascript" src="./assets/js/preload.js") 
+		script(type="text/javascript" src="./assets/dist/hammerjs/hammer.min.js") 
+		script(type="text/javascript" src="./assets/js/main.js") 
+		script(type="text/javascript" src="./assets/js/luk.js") 

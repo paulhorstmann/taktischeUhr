@@ -3,8 +3,6 @@ import Controller from "../Controller";
 import { ClockFont } from "./assets/Fonts";
 
 export default async function SimpleText() {
-
-
     await new Promise(
         async resolve => {
             const font = ClockFont
@@ -12,15 +10,15 @@ export default async function SimpleText() {
 
             const lines = LayoutUtils.textToLines(
                 font,
-                Controller.matrix.width(),
-                "Willkommen"
+                128,
+                Controller.store.text
             );
 
             Controller.matrix.fgColor(0xff0000);
             LayoutUtils.linesToMappedGlyphs(
                 lines,
                 font.height(),
-                Controller.matrix.width(),
+                128,
                 Controller.matrix.height(),
                 HorizontalAlignment.Center,
                 VerticalAlignment.Middle

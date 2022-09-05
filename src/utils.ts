@@ -35,6 +35,14 @@ function replacingUmlauts(word: string): string {
     return word
 }
 
+interface ErrnoException extends Error {
+    errno?: number;
+    code?: string;
+    path?: string;
+    syscall?: string;
+    stack?: string;
+}
+
 
 async function loadImageInBuffer(filename: string): Promise<Buffer> {
     try {
@@ -62,4 +70,4 @@ function weekdaysToString(dayIndex: number): string {
     ][dayIndex]
 }
 
-export { wait, convertABGRToRGB, convertBGRAtoRGB, replacingUmlauts, weekdaysToString, loadImageInBuffer } 
+export { wait, convertABGRToRGB, convertBGRAtoRGB, replacingUmlauts, weekdaysToString, loadImageInBuffer, ErrnoException } 

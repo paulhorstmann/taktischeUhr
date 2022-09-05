@@ -12,8 +12,7 @@ export const matrixOptions: MatrixOptions = {
     cols: 64,
     chainLength: 2,
     limitRefreshRateHz: 150,
-    hardwareMapping: GpioMapping.Regular,
-    showRefreshRate: true,
+    hardwareMapping: GpioMapping.Regular
 };
 
 export const runtimeOptions: RuntimeOptions = {

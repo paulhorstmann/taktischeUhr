@@ -1,6 +1,8 @@
 import express from "express";
 import Controller from "../Controller";
 import RSSFeedHandler from "../services/RSSFeedHandler";
+import InterfaceRoutes from "./interface.routes"
+import ServiceRoutes from "./service.routes"
 
 export default class Webserver {
     private app = express()
@@ -8,10 +10,16 @@ export default class Webserver {
 
     constructor(port: number) {
         this.port = port
-        this.useAuthentication()
+        this.app.set('view engine', 'pug');
         this.app.use(express.static('./public'));
+        this.app.use(express.json());
 
-        this.app.get("/f/:f", (req, res) => {
+        this.useAuthentication()
+
+        this.app.use("/", InterfaceRoutes)
+        this.app.use("/service", ServiceRoutes)
+
+        this.app.get("/f/:f", async (req, res) => {
             try {
                 const feedId = Number.parseInt(req.params.f)
                 if (feedId) {
@@ -20,15 +28,6 @@ export default class Webserver {
             } catch {
                 res.send("Ein Fehler ist aufgetreten")
             }
-        })
-
-        this.app.get("/change", (req, res) => {
-
-            Controller.views[3].disabled = !Controller.views[3].disabled
-
-            console.log("Change")
-
-            res.send("Alles gut")
         })
 
         this.app.listen(port, () => {
