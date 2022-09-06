@@ -39,7 +39,7 @@ export default class Controller {
         },
         weather: {
             stadtName: "33719, Bielefeld",
-            apiKey: "b851570cad2913b6254377f0b27b855a",
+            apiKey: "",
             lat: "52.29",
             lon: "53.24",
         },
@@ -66,7 +66,7 @@ export default class Controller {
         return new Promise(res => {
             Controller.matrix = new LedMatrix(matrixOptions, runtimeOptions)
 
-            this.services.weather = new WaetherApiHandler("b851570cad2913b6254377f0b27b855a", "52.29", "8.89")
+            this.services.weather = new WaetherApiHandler(Controller.store.weather.apiKey, Controller.store.weather.lat, Controller.store.weather.lon)
             // this.services.rssFeed = new RSSFeedHandler('https://www.thw.de/SiteGlobals/Functions/RSS/DE/Feed/RSSNewsfeed_Meldungen_Gesamt.xml')
 
             // newsfeed: new ViewHandler(ViewTypes.Newsfeed),

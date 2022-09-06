@@ -10,7 +10,7 @@ npm i -g yarn
 sudo apt-get install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
 ```
 
-3. Instal NPM-Packages mit yarn
+3. Install NPM-Packages mit yarn
 ```
 yarn install
 ``` 
