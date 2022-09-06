@@ -1,8 +1,8 @@
 import axios from "axios"
 import path from "path"
 import * as fs from 'fs/promises';
-import { loadImageInBuffer, wait, weekdaysToString } from "../utils"
-import WeatherIcons from "../views/WeatherIcons";
+import { wait, weekdaysToString } from "../utils"
+import Controller from "../Controller";
 
 interface DailyWeatherItem {
     icon: string
@@ -77,7 +77,7 @@ export default class WaetherApiHandler {
 
         await axios({
             method: 'get',
-            url: `${this.url}&appid=${this.apikey}&lat=${this.lat}&lon=${this.lon}`,
+            url: `${this.url}&appid=${Controller.store.weather.apiKey}&lat=${Controller.store.weather.lat}&lon=${Controller.store.weather.lon}`,
         }).then((response) => {
             resData = response.data
         }).catch(function (error) {

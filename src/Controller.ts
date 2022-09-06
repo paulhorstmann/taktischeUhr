@@ -12,17 +12,6 @@ import WaetherApiHandler from './services/WeatherApiHandler';
 import { ViewHandler, ViewTypes } from "./ViewHandler";
 import { ErrnoException, wait } from "./utils";
 
-interface ControllerStore {
-    weather: {
-        apiKey: string,
-        lat: string,
-        lon: string
-    },
-    image: {
-        imageSrc: number
-    }
-}
-
 interface viewStore {
     [viewID: string]: ViewHandler;
 }
@@ -40,6 +29,7 @@ export default class Controller {
 
     static store = {
         isLUKModeOn: false,
+        brightness: 90,
         active: {
             newsfeed: true,
             isoClockFormat: true,
@@ -54,7 +44,7 @@ export default class Controller {
             lon: "53.24",
         },
         image: {
-            imageSrc: "thwdark"
+            imageSrc: "thw-white-bg"
         },
         text: "Willkommen"
     }
@@ -108,6 +98,14 @@ export default class Controller {
     }
 
     static async updateStore(newstore: any) {
+
+
+        if (Controller.store.brightness != newstore.brightness) {
+            console.log("yes")
+            Controller.matrix.brightness(newstore.brightness)
+            Controller.matrix.clear()
+        }
+
         Controller.store = newstore
 
         for (const [key, value] of Object.entries(Controller.views)) {

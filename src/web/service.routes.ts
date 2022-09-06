@@ -23,6 +23,7 @@ router.route('/store').post(async (req, res) => {
         res.sendStatus(500)
         return
     }
+
     await Controller.updateStore(req.body)
     res.json(Controller.store)
 })

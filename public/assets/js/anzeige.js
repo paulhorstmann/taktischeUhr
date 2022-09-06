@@ -1,10 +1,20 @@
+// const $brightnessRange = document.getElementById("brightness-range")
+// const $brightnessText = document.getElementById("brightness-text")
+
 const $weatherInput = document.getElementById("weatherZIP");
 const $weatherResponse = document.getElementById("postleitzahlResponse");
 const $checkLocationIcon = document.getElementById("checkLocationIcon");
 
 const $simpleText = document.getElementById("simpleText")
 
+const $$imageToggler = document.querySelectorAll(".imageToggler")
 
+$$imageToggler.forEach(toggel => {
+	toggel.addEventListener("change", event => {
+		settings.image.imageSrc = toggel.value
+		updateSettings()
+	})
+})
 
 let settings
 const hosturl = "http://" + location.host;
@@ -12,8 +22,21 @@ const hosturl = "http://" + location.host;
 
 (async () => {
 	await getSettings()
+
 	fetchOpenWeatherAPI($weatherInput.value)
 })();
+
+// $brightnessRange.addEventListener("input", () => {
+// 	console.log("hello")
+// 	$brightnessText.innerText = $brightnessRange.value
+// })
+
+
+// $brightnessRange.addEventListener("change", () => {
+// 	settings.brightness = $brightnessRange.value
+// 	updateSettings()
+// })
+
 
 const updateDebounce = debounce((val) => {
 	fetchOpenWeatherAPI(val);
@@ -102,6 +125,8 @@ async function getSettings() {
 }
 
 async function updateSettings() {
+
+	console.log(settings)
 	try {
 		await fetch(hosturl + "/service/store", {
 			method: 'POST',

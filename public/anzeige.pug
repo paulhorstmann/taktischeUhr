@@ -17,12 +17,79 @@ html(lang="de")
 
 			.container.center#format 
 				.input-container
-					label(for="ssid") Zeitformat
-					input#ssid(type="text" value="DDhhmmMMMYY" disabled)
+					label(for="timeformat") Zeitformat
+					input#timeformat(type="text" value="DDhhmmMMMYY" name="timeformat" disabled)
 
+				
+				//- .input-container
+				//- 	label(for="ssid") Helligkeit
+				//- 	#brightness-text !{store.brightness}
+				//- 	input#brightness-range(type="range" min="1" max="100" value=store.brightness)
 
 			.container.center#addon
 				h3 Add-Ons
+
+				.cardAddon#rssFeed
+					.cardHeader
+						.title 
+							img(src="/assets/img/icons/addon/news.svg" alt="").icon
+							.text THW Newsfeed
+
+						label.switch
+							input(type="checkbox" checked=viewState.newsfeed data-name="newsfeed")
+							span.slider.round
+					.cardBody
+						p Aktuelle Meldungung bezogen von: 
+						a(href="https://www.thw.de/SiteGlobals/Functions/RSS/DE/Feed/RSSNewsfeed_Meldungen_Gesamt.xml?nn=924198" target="_blank").wordbreak https://www.thw.de/SiteGlobals/Functions/RSS/DE/Feed/RSSNewsfeed_Meldungen_Gesamt.xml?nn=924198
+
+				.cardAddon#iso
+					.cardHeader
+						.title 
+							img(src="/assets/img/icons/addon/clock.svg" alt="").icon
+							.text ISO 8601 Uhrzeitformat
+
+						label.switch
+							input(type="checkbox" checked=viewState.isoClockFormat data-name="isoClockFormat")
+							span.slider.round
+					.cardBody
+						p ISO 8601 ist ein internationaler Standard der ISO, der Empfehlungen über numerische Datumsformate und Zeitangaben enthält
+						p Einundzwanzig Uhr fünfunddreißig wäre in diesem Format - 21:35 ✌️
+
+				.cardAddon#imageUpload
+					.cardHeader
+						.title 
+							img(src="/assets/img/icons/addon/image.svg" alt="").icon
+							.text Bild anzeigen
+
+						label.switch
+							input(type="checkbox" checked=viewState.image data-name="image")
+							span.slider.round
+
+					.cardBody
+						label(for="thwwhitebg")
+							input(type="radio" name="image" value="thw-white-bg" checked=("thw-white-bg" == store.image.imageSrc))#thwwhitebg.imageToggler
+							.checkmark
+							img(src="./assets/img/example/thw-white-bg.svg").imageContent
+
+						label(for="thwblackbg")
+							input(type="radio" name="image" value="thw-black-bg" checked=("thw-black-bg" == store.image.imageSrc))#thwblackbg.imageToggler
+							.checkmark
+							img(src="./assets/img/example/thw-black-bg.svg").imageContent
+
+						label(for="thwbluebg")
+							input(type="radio" name="image" value="thw-blue-bg" checked=("thw-blue-bg" == store.image.imageSrc))#thwbluebg.imageToggler
+							.checkmark
+							img(src="./assets/img/example/thw-blue-bg.svg").imageContent
+
+						label(for="colortest")
+							input(type="radio" name="image" value="color-test" checked=("color-test" == store.image.imageSrc))#colortest.imageToggler
+							.checkmark
+							img(src="./assets/img/example/color-test.svg").imageContent
+
+						label(for="mittag")
+							input(type="radio" name="image" value="mittag" checked=("mittag" == store.image.imageSrc))#mittag.imageToggler
+							.checkmark
+							img(src="./assets/img/example/mittag.svg").imageContent
 
 				.cardAddon#wetter
 					.cardHeader
@@ -46,40 +113,6 @@ html(lang="de")
 								| Erstelle einen API KEY unter 
 								a(href="https://openweathermap.org/") openweathermap.org 
 
-				.cardAddon#imageUpload
-					.cardHeader
-						.title 
-							img(src="/assets/img/icons/addon/image.svg" alt="").icon
-							.text Bild anzeigen
-
-						label.switch
-							input(type="checkbox" checked=viewState.image data-name="image")
-							span.slider.round
-
-					.cardBody
-						label(for="thwpri")
-							input(type="radio" name="imageUpload" value="thwpri" checked)#thwpri
-							.checkmark
-							img(src="./assets/img/example/thwLogo.svg").imageContent
-
-						label(for="thwSec")
-							input(type="radio" name="imageUpload" value="thwSec")#thwSec
-							.checkmark
-							img(src="./assets/img/example/thwLogoBlack.svg").imageContent
-
-				.cardAddon#rssFeed
-					.cardHeader
-						.title 
-							img(src="/assets/img/icons/addon/news.svg" alt="").icon
-							.text THW Newsfeed
-
-						label.switch
-							input(type="checkbox" checked=viewState.newsfeed data-name="newsfeed")
-							span.slider.round
-					.cardBody
-						p Aktuelle Meldungung bezogen von: 
-						a(href="https://www.thw.de/SiteGlobals/Functions/RSS/DE/Feed/RSSNewsfeed_Meldungen_Gesamt.xml?nn=924198" target="_blank").wordbreak https://www.thw.de/SiteGlobals/Functions/RSS/DE/Feed/RSSNewsfeed_Meldungen_Gesamt.xml?nn=924198
-
 				.cardAddon#texteingabe
 					.cardHeader
 						.title 
@@ -92,19 +125,6 @@ html(lang="de")
 					.cardBody
 						label(for="weatherZIP") Anzuzeigender Text
 						input#simpleText(type="text" value=store.text)
-
-				.cardAddon#iso
-					.cardHeader
-						.title 
-							img(src="/assets/img/icons/addon/clock.svg" alt="").icon
-							.text ISO 8601 Uhrzeitformat
-
-						label.switch
-							input(type="checkbox" checked=viewState.isoClockFormat data-name="isoClockFormat")
-							span.slider.round
-					.cardBody
-						p ISO 8601 ist ein internationaler Standard der ISO, der Empfehlungen über numerische Datumsformate und Zeitangaben enthält
-						p Einundzwanzig Uhr fünfunddreißig wäre in diesem Format - 21:35 ✌️
 
 
 		script(type="text/javascript" src="./assets/js/preload.js") 

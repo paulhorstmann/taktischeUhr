@@ -8,6 +8,7 @@ import {
 
 export const matrixOptions: MatrixOptions = {
     ...LedMatrix.defaultMatrixOptions(),
+    brightness: 80,
     rows: 32,
     cols: 64,
     chainLength: 2,
